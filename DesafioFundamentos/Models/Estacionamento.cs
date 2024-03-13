@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace DesafioFundamentos.Models
 {
     public class Estacionamento
@@ -16,16 +18,15 @@ namespace DesafioFundamentos.Models
         {
             // TODO: Pedir para o usuário digitar uma placa (ReadLine) e adicionar na lista "veiculos"
             string placa = "";
+            Regex regex = new Regex(@"^[A-Z]{3}\d{4}$|^[A-Z]{3}\d[A-Z]\d{2}$");
             Console.WriteLine("Digite a placa do veículo para estacionar:");
             placa = Console.ReadLine();
-            //Verificação simples se a placa ja foi cadastrada
-            if(veiculos.Contains(placa))
-            {
-                Console.WriteLine("Placa já adicionada anteriormente.");
+            //Verificação se a placa atende aos padroes de placa brasileira e se ela ja foi cadastrada
+            if(regex.IsMatch(placa) && !veiculos.Contains(placa)){
+                    veiculos.Add(placa);
+                    Console.WriteLine("Veículo adicionado com sucesso!");
             }else{
-                veiculos.Add(placa);
-                Console.WriteLine("Veículo adicionado com sucesso!");
-
+                Console.WriteLine("Formato de placa inválida, ou placa ja cadastrada");
             }
         }
 
